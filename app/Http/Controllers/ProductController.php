@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
@@ -15,28 +15,28 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-     
+
         if ($request->ajax()) {
-  
+
             $data = Product::latest()->get();
-  
-            return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-   
-                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct">Edit</a>';
-   
-                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct">Delete</a>';
-    
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+
+            return datatables()->of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct">Edit</a>';
+
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct">Delete</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
-        
+
         return view('product');
     }
-       
+
     /**
      * Store a newly created resource in storage.
      *
@@ -46,12 +46,12 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         Product::updateOrCreate([
-                    'id' => $request->product_id,
-                    'name' => $request->name, 
-                    'detail' => $request->detail
-                ]);        
-     
-        return response()->json(['success'=>'Record saved successfully.']);
+            'id' => $request->product_id,
+            'name' => $request->name,
+            'detail' => $request->detail
+        ]);
+
+        return response()->json(['success' => 'Record saved successfully.']);
     }
     /**
      * Show the form for editing the specified resource.
@@ -64,7 +64,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         return response()->json($product);
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -74,7 +74,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         Product::find($id)->delete();
-      
-        return response()->json(['success'=>'Record deleted successfully.']);
+
+        return response()->json(['success' => 'Record deleted successfully.']);
     }
 }
