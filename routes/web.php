@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
 // Route::resource('products-ajax-crud', ProductController::class);
+
     Route::get('/products-ajax-crud', [ProductController::class, 'index'])->name('products-ajax-crud.index');
     Route::get('/products-ajax-crud/{id}/edit', [ProductController::class, 'edit'])->name('products-ajax-crud.edit');
     Route::post('/products-ajax-crud/store/', [ProductController::class, 'store'])->name('products-ajax-crud.store');
