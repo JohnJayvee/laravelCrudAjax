@@ -132,7 +132,7 @@
 
                     <!-- redirect to sample pages -->
                     <div>
-                        <a href="{{ route('products-ajax-crud.index') }}">
+                        <a href="{{ route('products.index') }}">
                             <button type="button" class="btn btn-primary">Product Ajax</button>
                         </a>
                     </div>

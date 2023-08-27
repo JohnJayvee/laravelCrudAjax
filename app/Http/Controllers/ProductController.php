@@ -17,7 +17,7 @@ class ProductController extends Controller
             // $data = Product::latest()->get();
             $data = Product::latest()->get();
 
-            return datatables()->of($data)
+            return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
 

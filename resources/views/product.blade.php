@@ -146,6 +146,8 @@
           $('#product_id').val(data.id);
           $('#name').val(data.name);
           $('#detail').val(data.detail);
+          $('#saveBtn').html('hide');
+          $('#saveBtn').html('Save Changes');
       })
     });
       
@@ -156,7 +158,7 @@
     --------------------------------------------*/
     $('#saveBtn').click(function (e) {
         e.preventDefault();
-        $(this).html('Sending..');
+        $(this).html('Saving..');
       
         $.ajax({
           data: $('#productForm').serialize(),
