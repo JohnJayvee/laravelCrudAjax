@@ -18,4 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('products-ajax-crud', ProductController::class);
+// Route::resource('products-ajax-crud', ProductController::class);
+
+
+    Route::get('/products-ajax-crud', [ProductController::class, 'index'])->name('products-ajax-crud.index');
+    Route::get('/products-ajax-crud/{id}/edit', [ProductController::class, 'edit'])->name('products-ajax-crud.edit');
+    Route::post('/products-ajax-crud/store/', [ProductController::class, 'store'])->name('products-ajax-crud.store');
+    Route::get('/products-ajax-crud/show/{id}', [ProductController::class, 'show'])->name('products-ajax-crud.show');
+    Route::delete('/products-ajax-crud/{id}', [ProductController::class, 'destroy'])->name('products-ajax-crud.destroy');

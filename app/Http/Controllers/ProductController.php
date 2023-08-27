@@ -8,11 +8,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
 
@@ -37,44 +32,36 @@ class ProductController extends Controller
         return view('product');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        Product::updateOrCreate([
-            'id' => $request->product_id,
-            'name' => $request->name,
-            'detail' => $request->detail
-        ]);
+        Product::updateOrCreate( ['id' => $request->product_id, ],
+            [
+                // 'id' => $request->product_id,
+                'name' => $request->name,
+                'detail' => $request->detail
+            ]
+        );
 
         return response()->json(['success' => 'Record saved successfully.']);
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         $product = Product::find($id);
         return response()->json($product);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         Product::find($id)->delete();
 
         return response()->json(['success' => 'Record deleted successfully.']);
+    }
+
+    public function show($id)
+    {
+        $product = Product::find($id);
+        return response()->json($product);
     }
 }

@@ -115,9 +115,23 @@
     Click to Edit Button
     --------------------------------------------
     --------------------------------------------*/
+    // $('body').on('click', '.editProduct', function () {
+    //   var product_id = $(this).data('id');
+    //   $.get("{{ route('products-ajax-crud.index') }}" +'/' + product_id +'/edit', function (data) {
+    //       $('#modelHeading').html("Edit Product");
+    //       $('#saveBtn').val("edit-user");
+    //       $('#ajaxModel').modal('show');
+    //       $('#product_id').val(data.id);
+    //       $('#name').val(data.name);
+    //       $('#detail').val(data.detail);
+    //   })
+    // });
+
     $('body').on('click', '.editProduct', function () {
-      var product_id = $(this).data('id');
-      $.get("{{ route('products-ajax-crud.index') }}" +'/' + product_id +'/edit', function (data) {
+        var product_id = $(this).data('id');
+                var editUrl = '{{ route('products-ajax-crud.edit', ':id') }}';
+                editUrl = editUrl.replace(':id', product_id);
+                $.get(editUrl, function(data) {
           $('#modelHeading').html("Edit Product");
           $('#saveBtn').val("edit-user");
           $('#ajaxModel').modal('show');
@@ -160,23 +174,47 @@
     Delete Product Code
     --------------------------------------------
     --------------------------------------------*/
-    $('body').on('click', '.deleteProduct', function () {
+    // $('body').on('click', '.deleteProduct', function () {
      
-        var product_id = $(this).data("id");
-        confirm("Are You sure want to delete !");
+    //     var product_id = $(this).data("id");
+    //     confirm("Are You sure want to delete !");
         
-        $.ajax({
-            type: "DELETE",
-            url: "{{ route('products-ajax-crud.store') }}"+'/'+product_id,
-            success: function (data) {
-                table.draw();
-            },
-            error: function (data) {
-                console.log('Error:', data);
-            }
-        });
-    });
-       
+    //     $.ajax({
+    //         type: "DELETE",
+    //         url: "{{ route('products-ajax-crud.index') }}"+'/'+product_id,
+    //         success: function (data) {
+    //             table.draw();
+    //         },
+    //         error: function (data) {
+    //             console.log('Error:', data);
+    //         }
+    //     });
+    // });
+
+           $('body').on('click', '.deleteProduct', function () {
+     
+            var product_id = $(this).data('id');
+                var deleteUrl = '{{ route('products-ajax-crud.destroy', ':id') }}';
+                deleteUrl = deleteUrl.replace(':id', product_id);
+
+
+                if (confirm("Are You sure want to delete !")) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: deleteUrl,
+
+                        error: function() {
+                            console.log('Error:', data);
+                            table.draw();
+                        },
+                        success: function(data) {
+                            console.log('Success:', data);
+                            table.draw();
+                        }
+
+                    });
+                }
+            });
   });
 </script>
 </html>
