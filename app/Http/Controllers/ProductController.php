@@ -13,6 +13,8 @@ class ProductController extends Controller
 
         if ($request->ajax()) {
 
+            // $data = Product::orderBy('id', 'asc')->get()
+            // $data = Product::latest()->get();
             $data = Product::latest()->get();
 
             return datatables()->of($data)
@@ -34,7 +36,10 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        Product::updateOrCreate( ['id' => $request->product_id, ],
+        Product::updateOrCreate(
+            [
+                'id' => $request->product_id,
+            ],
             [
                 // 'id' => $request->product_id,
                 'name' => $request->name,

@@ -21,7 +21,7 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Name</th>
+                <th >Name</th>
                 <th>Details</th>
                 <th width="280px">Action</th>
             </tr>
@@ -88,9 +88,17 @@
     var table = $('.data-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('products-ajax-crud.index') }}",
+        ajax: "{{ route('products.index') }}",
+        "lengthMenu": [20, 40, 60, 80, 100],
+        "pageLength": 20,
+        "lengthChange": false,  
+       "searching": true,
+       "paging": true   ,
+        "info": true,
+        "bSort": true,
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            // {data: 'name', name: 'name', "bSortable": false},
             {data: 'name', name: 'name'},
             {data: 'detail', name: 'detail'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -117,7 +125,7 @@
     --------------------------------------------*/
     // $('body').on('click', '.editProduct', function () {
     //   var product_id = $(this).data('id');
-    //   $.get("{{ route('products-ajax-crud.index') }}" +'/' + product_id +'/edit', function (data) {
+    //   $.get("{{ route('products.index') }}" +'/' + product_id +'/edit', function (data) {
     //       $('#modelHeading').html("Edit Product");
     //       $('#saveBtn').val("edit-user");
     //       $('#ajaxModel').modal('show');
@@ -129,7 +137,7 @@
 
     $('body').on('click', '.editProduct', function () {
         var product_id = $(this).data('id');
-                var editUrl = '{{ route('products-ajax-crud.edit', ':id') }}';
+                var editUrl = '{{ route('products.edit', ':id') }}';
                 editUrl = editUrl.replace(':id', product_id);
                 $.get(editUrl, function(data) {
           $('#modelHeading').html("Edit Product");
@@ -152,7 +160,7 @@
       
         $.ajax({
           data: $('#productForm').serialize(),
-          url: "{{ route('products-ajax-crud.store') }}",
+          url: "{{ route('products.store') }}",
           type: "POST",
           dataType: 'json',
           success: function (data) {
@@ -181,7 +189,7 @@
         
     //     $.ajax({
     //         type: "DELETE",
-    //         url: "{{ route('products-ajax-crud.index') }}"+'/'+product_id,
+    //         url: "{{ route('products.index') }}"+'/'+product_id,
     //         success: function (data) {
     //             table.draw();
     //         },
@@ -194,7 +202,7 @@
            $('body').on('click', '.deleteProduct', function () {
      
             var product_id = $(this).data('id');
-                var deleteUrl = '{{ route('products-ajax-crud.destroy', ':id') }}';
+                var deleteUrl = '{{ route('products.destroy', ':id') }}';
                 deleteUrl = deleteUrl.replace(':id', product_id);
 
 
